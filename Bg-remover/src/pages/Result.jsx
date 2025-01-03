@@ -1,8 +1,12 @@
 import * as React from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import { assets } from '../assets/assets';
+import { AppContext } from '../context/appContext';
 
 const Result = () => {
+
+  const {resultImage,image}=React.useContext(AppContext);
+
   return (
     <div className='mx-4 my-3 lg:mx-44 mt-14 min-h-[75vh]'>
       {/* -------------------------------------Image section--------------------------------------------------- */}
@@ -12,36 +16,41 @@ const Result = () => {
           {/* -------------------------------------Left Side----------------------------------------------- */}
           <div>
             <p className='font-semibold text-gray-600 mb-2'>Original Image</p>
-            <img className='rounded-md border' src={assets.image_w_bg} alt="" />
+            <img className='rounded-md border' src={image?URL.createObjectURL(image):''} alt="" />
           </div>
         
           {/* -------------------------------------------Right Side------------------------------------------- */}
           <div className='flex flex-col'>
             <p className='font-semibold text-gray-600 mb-2'>Background Removed</p>
             <div className='rounded-md border border-gray-300 h-full bg-layer overflow-hidden hidden sm:block'>
-              {/* <img src={assets.image_wo_bg} alt="" /> */}
-              <Skeleton
+              <img src={resultImage?resultImage:""} alt="" />
+              {
+                !resultImage &&<Skeleton
                 sx={{ bgcolor: 'grey.900' }}
                 variant="rounded"
                 height={'100%'}
               />
+              }
+              
             </div>
             <div className='rounded-md border border-gray-300 h-full bg-layer overflow-hidden sm:hidden block'>
-              {/* <img src={assets.image_wo_bg} alt="" /> */}
-              <Skeleton
+              <img src={resultImage?resultImage:""} alt="" />
+              {
+                !resultImage && <Skeleton
                 sx={{ bgcolor: 'grey.900' }}
                 variant="rounded"
                 height={210}
                 width={'100%'}
               />
+              }
             </div>
           </div>
         </div>
           {/*---------------------------------------bUTTON-----------------------------------  */}
-          <div className='flex justify-center sm:justify-end items-center flex-wrap gap-4 mt-6'>
+          {resultImage&&<div className='flex justify-center sm:justify-end items-center flex-wrap gap-4 mt-6'>
             <button className='px-8 py-2.5 text-violet-600 border border-violet-600 rounded-full hover:scale-105 transition-all duration-700'>Try another image</button>
-            <a className='px-8 py-2.5 text-white text-sm bg-gradient-to-r from-violet-600 to-fuchsia-500 rounded-full hover:scale-105 transition-all duration-700' href="">Download image</a>
-          </div>
+            <a href={resultImage} download className='px-8 py-2.5 text-white text-sm bg-gradient-to-r from-violet-600 to-fuchsia-500 rounded-full hover:scale-105 transition-all duration-700'>Download image</a>
+          </div>}
       </div>
     </div>
   )
