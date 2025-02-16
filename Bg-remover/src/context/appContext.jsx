@@ -20,13 +20,10 @@ const AppContextProvider = (props) => {
 
     const loadCreditsData = async () => {
         try {
-
-            const token=await getToken()
+            const token=await getToken();
             const {data}=await axios.get(backendUrl+'/api/user/credits',{headers:{token}})
             if (data.success) {
                 setCredit(data.credit);
-                console.log(data.credit);
-                
             }
         } catch (error) {
             console.log(error);
