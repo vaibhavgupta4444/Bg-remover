@@ -8,15 +8,16 @@ import userModel from '../models/userModel.js'
 const removeBgImage= async(req,res)=>{
     try {
         const {clerkId}=req.body;
+        
     
         const user=await userModel.findOne({clerkId});
 
         if(!user){
             return res.json({success:false,message:'User Not Found'});
         }
-
-        if(user.creditBalance===0){
-            return res.json({success:false,message:'No Credit Balance',creditBalance:user.creditBalance});
+        
+        if(user.CreditBalance===0){
+            return res.json({success:false,message:'No Credit Balance',CreditBalance:user.CreditBalance});
         }
 
         const imagePath=req.file.path;
@@ -38,9 +39,9 @@ const removeBgImage= async(req,res)=>{
 
         const resultImage=`data:${req.file.mimetype};base64,${base64Image}`
 
-        await userModel.findByIdAndUpdate(user._id,{creditBalance:user.creditBalance-1})
+        await userModel.findByIdAndUpdate(user.id,{CreditBalance:user.CreditBalance-1})
 
-        res.json({success:true,resultImage,creditBalance:user.creditBalance-1,message:'Background Removed'});
+        res.json({success:true,resultImage,CreditBalance:user.CreditBalance-1,message:'Background Removed'});
     } catch (error) {
         console.log(error);
         res.json({success:false,message:error.message});

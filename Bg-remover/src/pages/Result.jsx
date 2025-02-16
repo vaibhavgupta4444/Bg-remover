@@ -2,9 +2,11 @@ import * as React from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import { assets } from '../assets/assets';
 import { AppContext } from '../context/appContext';
+import { useNavigate } from 'react-router-dom';
 
 const Result = () => {
 
+  const navigate=useNavigate();
   const {resultImage,image}=React.useContext(AppContext);
 
   return (
@@ -48,7 +50,7 @@ const Result = () => {
         </div>
           {/*---------------------------------------bUTTON-----------------------------------  */}
           {resultImage&&<div className='flex justify-center sm:justify-end items-center flex-wrap gap-4 mt-6'>
-            <button className='px-8 py-2.5 text-violet-600 border border-violet-600 rounded-full hover:scale-105 transition-all duration-700'>Try another image</button>
+            <button onClick={()=>navigate('/')} className='px-8 py-2.5 text-violet-600 border border-violet-600 rounded-full hover:scale-105 transition-all duration-700'>Try another image</button>
             <a href={resultImage} download className='px-8 py-2.5 text-white text-sm bg-gradient-to-r from-violet-600 to-fuchsia-500 rounded-full hover:scale-105 transition-all duration-700'>Download image</a>
           </div>}
       </div>
